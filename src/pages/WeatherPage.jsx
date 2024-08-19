@@ -6,6 +6,7 @@ import Loader from "../components/Loader/Loader";
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import WeatherDetails from "../components/WeatherDetails/WeatherDetails";
 import RecentSearches from "../components/RecentSearches/RecentSearches";
+import TemperatureDropdown from "../components/DropDown/DropDown";
 
 const WeatherPage = () => {
   const [cityName, setCityName] = useState("");
@@ -33,14 +34,14 @@ const WeatherPage = () => {
 
   const handleOnChange = (newValue) => {
     setCityName(newValue);
-    setShowClearButton(!!newValue); // Enable clear button when there is input
+    setShowClearButton(!!newValue);
   };
 
   const handleClearButton = () => {
     setCityName("");
     setShowClearButton(false);
     if (inputRef.current) {
-      inputRef.current.focus(); // Focus back on the input field after clearing
+      inputRef.current.focus();
     }
   };
 
@@ -80,24 +81,16 @@ const WeatherPage = () => {
                 onClick={handleClearButton}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-1 px-2 rounded-full"
               >
-                &times;
+                clear
               </button>
             )}
           </div>
         </form>
         <RecentSearches />
-        <div className="mb-6">
-          <label className="block text-blue-700 font-bold mb-2">Temperature Unit:</label>
-          <select
-            value={toggleTemperature}
-            onChange={handleToggleTemperature}
-            className="border rounded-lg py-2 px-4 w-full"
-          >
-            <option value="kelvin">Kelvin</option>
-            <option value="celsius">Celsius</option>
-            <option value="fahrenheit">Fahrenheit</option>
-          </select>
-        </div>
+        <TemperatureDropdown 
+          toggleTemperature={toggleTemperature} 
+          handleToggleTemperature={handleToggleTemperature} 
+        />
         {cityName && (
           <WeatherDetails
             weatherData={weatherData}

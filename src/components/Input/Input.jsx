@@ -1,8 +1,12 @@
-import React, { useState, useCallback, forwardRef } from "react";
-import { debounce } from "../../util/util"; 
+import React, { useState, useEffect, useCallback, forwardRef } from "react";
+import { debounce } from "../../util/util";
 
 const Input = forwardRef(({ className, placeholder, onChange, value, debounceDelay = 1000 }, ref) => {
   const [inputValue, setInputValue] = useState(value);
+  
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const handleChange = useCallback(
     debounce((newValue) => {
@@ -14,7 +18,7 @@ const Input = forwardRef(({ className, placeholder, onChange, value, debounceDel
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     setInputValue(newValue);
-    handleChange(newValue); 
+    handleChange(newValue);
   };
 
   return (
